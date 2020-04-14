@@ -1,3 +1,111 @@
 body {
     padding-top: 5rem;
 }
+
+.personinfo{
+    width: 50%;
+    height: 50%;
+    padding-left: 40px;
+    display: inline-block;
+    color: grey;
+    vertical-align: middle;
+     }
+.profilebox{
+    margin: 0 auto;
+    width: 65%;
+    height: 550px;
+    border-top: 5px solid #1589ff;
+    border-radius: 5px;
+    background-color: white;
+}
+
+#profilephoto {
+    width: 25%;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.profileimg {
+    width: 48%;
+    height: 50%;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 50px;
+}
+.about{
+    color:grey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+
+}
+
+.bio {
+    
+    color:grey;
+    width: 80%;
+    height: 20%;
+}
+
+.send {
+    background-color: #5ffb17;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    width: 30%;
+    height:35px;
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 20%;
+    border-radius:5px; 
+    margin-top:3%;
+  
+    
+}
+
+
+.follow {
+    background-color: #1589ff;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    width: 30%;
+    height:35px;
+    font-weight: bold;
+    border: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius:5px;
+}
+
+.userinfo {
+    width: 50%;
+    height: 100%;
+    vertical-align: middle;
+    color:grey;
+    display: inline-block;
+}
+.container {
+    background-color: white;
+    width: 80%;
+    height: 200px;
+    margin: 0 auto;
+    border-top: 4px solid  #1589ff;
+    border-radius: 5px;
+}
+
+.submit{
+  background-color: #00ff00;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  padding: 8px 14px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 5px;
+  
+}

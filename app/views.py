@@ -8,8 +8,11 @@ This file creates your application.
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from app.forms import LoginForm
+from werkzeug.utils import secure_filename
+from app.form import ProfileForm
 from app.models import UserProfile
+import os, datetime,random
+from app import app, db
 
 
 ###
@@ -28,31 +31,41 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if request.method == "POST":
-        # change this to actually validate the entire form submission
-        # and not just one field
-        if form.username.data:
-            # Get the username and password values from the form.
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    form=ProfileForm()
+    if (request.method =="POST" and form.validate_on_submit()):
+        first= form.firstname.data
+        last= form.lastname.data
+        gen= form.gender.data
+        mail = form.email.data
+        locate= form.location.data
+        biog= form.biography.data
+        pic = request.files['picture']
+        filename = secure_filename(pic.filename)
+        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], pic.filename))
+        now = datetime.date.today()
+        join= now.strftime("%B %d %Y") 
+        user= UserProfile(first,last,gen,mail,locate,biog,filename,join)
+        db.session.add(user)
+        db.session.commit()
+       
+        flash("User Profile has been added", "success")
+        return redirect(url_for('profiles'))
+        
+    return render_template('profile.html', form=form)
+   
+@app.route('/profiles', methods=["GET", "POST"])
+def profiles():
+    users = UserProfile.query.all()
+    if request.method == "GET":
+        return render_template('profiles.html', users=users)
+        
+@app.route('/profile/<userid>')
+def getUserProfile(userid):
+    user = UserProfile.query.filter_by(userid=userid).first()
+    return render_template('userprofile.html', user=user)
 
-            # using your model, query database for a user based on the username
-            # and password submitted. Remember you need to compare the password hash.
-            # You will need to import the appropriate function to do so.
-            # Then store the result of that query to a `user` variable so it can be
-            # passed to the login_user() method below.
-
-            # get user id, load into session
-            login_user(user)
-
-            # remember to flash a message to the user
-            return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
-    return render_template("login.html", form=form)
-
-
-# user_loader callback. This callback is used to reload the user object from
-# the user ID stored in the session
 @login_manager.user_loader
 def load_user(id):
     return UserProfile.query.get(int(id))
